@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: knote
+  namespace: default
+spec:
+  secretName: knote
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: alymkulovabk.online
+  dnsNames:
+  - alymkulovabk.online

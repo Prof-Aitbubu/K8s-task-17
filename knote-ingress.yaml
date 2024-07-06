@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: knote-ingress
+  annotations:
+    external-dns.alpha.kubernetes.io/zone: public
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - alymkulovabk.online
+    secretName: knote 
+  rules:
+    - host: alymkulovabk.online
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: knote
+                port:
+                  number: 80
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: knote-ingress
+#   annotations:
+#     external-dns.alpha.kubernetes.io/zone: public  # Replace with your DNS zone
+# spec:
+#   rules:
+#     - host: knote.alymkulovabk.online
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: knote
+#                 port:
+#                   number: 80
+

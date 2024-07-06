@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: k8s.gcr.io/external-dns/external-dns
+  tag: v0.10.1
+
+serviceAccount:
+  create: true
+  name: external-dns
+
+sources:
+  - service
+  - ingress
+
+provider: google
+
+google:
+  project: my-project-2-428517
+
+extraArgs:
+  - --google-project=my-project-2-428517
+
+extraVolumes:
+  - name: gcp-credentials
+    secret:
+      secretName: external-dns-gcp-credentials
+
+extraVolumeMounts:
+  - name: gcp-credentials
+    mountPath: /etc/kubernetes/gcp
+    readOnly: true
+
+env:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: /etc/kubernetes/gcp/key.json
